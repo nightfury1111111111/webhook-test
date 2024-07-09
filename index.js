@@ -19,7 +19,7 @@ app.post(
     const signature = request.headers["x-hub-signature-256"];
     const body = await request.text();
 
-    console.log({ signature, request });
+    console.log({ signature, body });
 
     // if (!(await webhooks.verify(body, signature))) {
     //   response.status(401).send("Unauthorized");
