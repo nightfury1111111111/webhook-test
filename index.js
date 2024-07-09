@@ -17,7 +17,7 @@ app.post(
   express.json({ type: "application/json" }),
   async (request, response) => {
     const signature = request.headers["x-hub-signature-256"];
-    const body = request.body;
+    const body = await request.text();
 
     console.log({ signature, request });
 
