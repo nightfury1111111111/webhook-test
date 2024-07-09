@@ -37,6 +37,7 @@ app.post('/webhook', express.json({ type: 'application/json' }), (request, respo
         console.log('GitHub sent the ping event');
     } else {
         console.log(`Unhandled event: ${githubEvent}`);
+        console.log(data.commits.author)
     }
 });
 
