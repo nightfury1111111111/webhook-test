@@ -38,8 +38,8 @@ app.post('/webhook', express.json({ type: 'application/json' }), (request, respo
     } else if (githubEvent === 'push') {
         console.log('A new commit was pushed');
         console.log(data)
-        // console.log(data.commits.author)
-        // console.log(data.commits)
+        console.log(data.commits.author)
+        console.log(data.commits)
     } else {
         console.log(`Unhandled event: ${githubEvent}`);
     }
