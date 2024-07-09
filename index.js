@@ -1,5 +1,10 @@
 // You installed the `express` library earlier. For more information, see "[JavaScript example: Install dependencies](#javascript-example-install-dependencies)."
 const express = require('express');
+const { Webhooks } = require("@octokit/webhooks");
+
+const webhooks = new Webhooks({
+    secret: process.env.WEBHOOK_SECRET,
+});
 
 // This initializes a new Express application.
 const app = express();
@@ -7,11 +12,22 @@ const app = express();
 // This defines a POST route at the `/webhook` path. This path matches the path that you specified for the smee.io forwarding. For more information, see "[Forward webhooks](#forward-webhooks)."
 //
 // Once you deploy your code to a server and update your webhook URL, you should change this to match the path portion of the URL for your webhook.
-app.post('/webhook', express.json({ type: 'application/json' }), (request, response) => {
+app.post('/webhook', express.json({ type: 'application/json' }), async (request, response) => {
+    const signature = req.headers["x-hub-signature-256"];
+    const body = await req.text();
+
+    console.log({ signature, body })
+
+    if (!(await webhooks.verify(body, signature))) {
+        res.status(401).send("Unauthorized");
+        return;
+    }
 
     // Respond to indicate that the delivery was successfully received.
     // Your server should respond with a 2XX response within 10 seconds of receiving a webhook delivery. If your server takes longer than that to respond, then GitHub terminates the connection and considers the delivery a failure.
     response.status(202).send('Accepted');
+
+    return
 
     // Check the `x-github-event` header to learn what event type was sent.
     const githubEvent = request.headers['x-github-event'];
