@@ -23,8 +23,8 @@ app.post('/webhook', express.json({ type: 'application/json' }), (request, respo
     // For example, this code handles the `opened` and `closed` actions for the `issue` event.
     //
     // For more information about the data that you can expect for each event type, see "[AUTOTITLE](/webhooks/webhook-events-and-payloads)."
+    const data = request.body;
     if (githubEvent === 'issues') {
-        const data = request.body;
         const action = data.action;
         if (action === 'opened') {
             console.log(`An issue was opened with this title: ${data.issue.title}`);
@@ -38,6 +38,8 @@ app.post('/webhook', express.json({ type: 'application/json' }), (request, respo
     } else {
         console.log(`Unhandled event: ${githubEvent}`);
         console.log(data.commits.author)
+        console.log(data.commits)
+        console.log(data)
     }
 });
 
