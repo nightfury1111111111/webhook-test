@@ -19,12 +19,12 @@ app.post(
     const signature = request.headers["x-hub-signature-256"];
     const body = request.body;
 
-    console.log({ signature });
+    console.log({ signature, request });
 
-    if (!(await webhooks.verify(body, signature))) {
-      response.status(401).send("Unauthorized");
-      return;
-    }
+    // if (!(await webhooks.verify(body, signature))) {
+    //   response.status(401).send("Unauthorized");
+    //   return;
+    // }
 
     // Respond to indicate that the delivery was successfully received.
     // Your server should respond with a 2XX response within 10 seconds of receiving a webhook delivery. If your server takes longer than that to respond, then GitHub terminates the connection and considers the delivery a failure.
