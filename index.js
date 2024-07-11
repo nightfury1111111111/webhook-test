@@ -59,7 +59,6 @@ app.post(
 // Once you deploy your code to a server, you should change this to match the port where your server is listening.
 const port = 3000;
 
-// This starts the server and tells it to listen at the specified port.
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
